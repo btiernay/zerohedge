@@ -277,6 +277,15 @@ h6:hover .header-link {
    font-size: 1.4em;
 }
 
+@media screen
+  and (device-width: 320px)
+  and (device-height: 640px)
+  and (-webkit-device-pixel-ratio: 2) {
+   #content {
+      font-size: 2.3em;
+   }
+}
+
 .node-unpublished {
    background-color: #fff4f4;
 }
