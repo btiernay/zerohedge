@@ -6,7 +6,7 @@ $(function () {
    function load(url) {
       $.get("https://crossorigin.me/" + url, function(data){
          var $html = $(data);
-         $html.find(".links,script").remove();
+         $html.find(".links,script,.js-links,.similar-box").remove();
          $html.find("img").each(function(){
             var src = $(this).attr("src");
             src = src.indexOf("http://") >= 0 ? src : "http://www.zerohedge.com" + src;
