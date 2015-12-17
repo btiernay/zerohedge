@@ -278,7 +278,7 @@ h6:hover .header-link {
 }
 
 @media screen
-  and (device-width: 320px)
+  and (device-width: 360px)
   and (device-height: 640px)
   and (-webkit-device-pixel-ratio: 2) {
    #content {
