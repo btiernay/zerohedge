@@ -1,13 +1,13 @@
 $(function () {
    var local = window.location.toString();
    var base = 'http://www.zerohedge.com';
-   load(base,false);
+   load(base, false);
 
    var $content = $("#content");
 
    $(window).on("popstate", function () {
       var url = base + location.href.replace(local, "");
-      load(url,false);
+      load(url, false);
    });
 
    function load(url, scroll) {
@@ -36,7 +36,10 @@ $(function () {
 
          // Show
          $content.html($html.find("#inner-content"));
-         document.body.scrollIntoView();
+
+         if (scroll) {
+            document.body.scrollIntoView();
+         }
       });
    }
 });
