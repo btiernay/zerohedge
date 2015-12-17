@@ -2,13 +2,20 @@ $(function () {
    load('http://www.zerohedge.com');
 
    var $content = $("#content");
+
    function load(url) {
-      $.getJSON('http://whateverorigin.org/get?url=' + encodeURIComponent(url) + '&callback=?', function(data){
-         var $html = $(data.contents);
+      $.get("https://crossorigin.me/" + url, function(data){
+         var $html = $(data);
          $html.find(".links,script").remove();
+         $html.find("img").each(function(){
+            var src = $(this).attr("src");
+            src = src.indexOf("http://") >= 0 ? src : "http://www.zerohedge.com" + src;
+            this.src = src;
+         });
          $html.find("a").click(function(data) {
             var href = $(this).attr('href');
             href = href.indexOf("www.zerohedge.com") > 0 ? href : "http://www.zerohedge.com" + href;
+            href = href.replace("/articles","/");
             load(href);
             return false;
          });
