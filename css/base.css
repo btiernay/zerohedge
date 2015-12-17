@@ -64,6 +64,7 @@ a:focus
    background-size: 18%;
    padding-left: 45px;
    font-size: 2em;
+   margin-left: 0 !important;
 }
 
 #mkdocs-search-query {
@@ -267,8 +268,11 @@ h6:hover .header-link {
    border-radius: 6px 0 6px 6px;
 }
 
+#wrapper {
+    margin-top: 6em;
+}
+
 #content {
-   margin-top: 100px;
    font-size: 1.25em;
 }
 
@@ -2068,9 +2072,6 @@ body.sidebars #squeeze {
 }
 
 body {
-   line-height: 1.3em;
-   color: #000;
-   background-color: #fff;
 }
 
 p {
@@ -2082,7 +2083,7 @@ h1,
 h2,
 h3,
 h4 {
-   padding-bottom: 5px;
+   padding-bottom: 1em;
    margin: 10px 0;
    line-height: 125%;
 }
@@ -2452,7 +2453,7 @@ div.edit-last-name-wrapper {
    float: left;
    clear: left;
    width: 125px;
-   margin: 0 5px 5px 0;
+   margin: 0 1em 1em 0;
 }
 
 .view-newsflash-pages-after-main .submitted + a img {
@@ -2836,7 +2837,8 @@ a.gtflag:hover {
    padding: 10px 0px 10px 10px;
    margin-bottom: 10px;
    margin-top: 3px;
-   background-color: #EEE;
+   background-color: #f7f7f7;
+   border-radius: 1em;
 }
 
 .text-box .imagecache {
