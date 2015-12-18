@@ -41,6 +41,15 @@ div.col-md-9 img {
 
 /****** Style Star Rating Widget *****/
 
+.rating-value {
+   float: right;
+   font-size: 1.25em;
+   font-family: FontAwesome;
+   margin: 5px;
+   display: inline-block;
+   color: black;
+}
+
 .rating {
    border: none;
    float: left;
