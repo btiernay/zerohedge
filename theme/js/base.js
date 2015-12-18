@@ -56,10 +56,13 @@ $(function () {
          });
 
          // Update ratings
-         var $rating = $html.find(".fivestar-static-form-item")
-         var rating = $rating.find(".average-rating").text().replace("Average: ", "");
+         var $rating = $html.find(".fivestar-static-form-item");
+         var text = $rating.find(".average-rating").text().replace("Average: ", "");
+         var rating = Math.round(+text*2)/2;
          $rating.html(
+            '<h3>Rating</h3>' +
             '<fieldset class="rating">' +
+            '<span class="rating-value">'+text +'</span>' +
             '<input type="radio" disabled="disabled" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>' +
             '<input type="radio" disabled="disabled" id="star4half" name="rating" value="4 and a half" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>' +
             '<input type="radio" disabled="disabled" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>' +
@@ -72,26 +75,28 @@ $(function () {
             '<input type="radio" disabled="disabled" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>' +
             '</fieldset>');
 
+
+
          var ratingId = "";
-         if (rating == "0.5") {
+         if (rating == 0.5) {
             ratingId = "#starhalf";
-         } else if (rating == "1.0") {
+         } else if (rating == 1.0) {
             ratingId = "#star1";
-         } else if (rating == "1.5") {
+         } else if (rating == 1.5) {
             ratingId = "#star1half";
-         } else if (rating == "2.0") {
+         } else if (rating == 2.0) {
             ratingId = "#star2";
-         } else if (rating == "2.5") {
+         } else if (rating == 2.5) {
             ratingId = "#star2half";
-         } else if (rating == "3.0") {
+         } else if (rating == 3.0) {
             ratingId = "#star3";
-         } else if (rating == "3.5") {
+         } else if (rating == 3.5) {
             ratingId = "#star3half";
-         } else if (rating == "4.0") {
+         } else if (rating == 4.0) {
             ratingId = "#star4";
-         } else if (rating == "4.5") {
+         } else if (rating == 4.5) {
             ratingId = "#star4half";
-         } else if (rating == "5.0") {
+         } else if (rating == 5.0) {
             ratingId = "#star5";
          }
 
