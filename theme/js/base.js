@@ -1,7 +1,8 @@
 $(function () {
-   var local = window.location.toString();
+   var local = document.URL;
    var base = 'http://www.zerohedge.com';
-   load(base, false);
+   var url = base + window.location.hash.replace("#","");
+   load(url, false);
 
    var $content = $("#content");
 
@@ -13,7 +14,7 @@ $(function () {
    function load(url, scroll) {
       $.get("https://crossorigin.me/" + url, function (data) {
          var $html = $(data);
-         $html.find(".links,script,.js-links,.similar-box,.content-box-1 > .picture,.clear-block").remove();
+         $html.find(".links,script,.js-links,.similar-box,.content-box-1 > .picture, .node > .picture, .tabs").remove();
          $html.find(".node .submitted").nextUntil(".content").remove();
          $html.find("img").each(function () {
             var src = $(this).attr("src");
@@ -25,13 +26,17 @@ $(function () {
             var zh = href.indexOf("www.zerohedge.com") > 0;
 
             if (zh || href.indexOf("http://") < 0) {
-               history.pushState({}, '', href.replace(base, ""));
+               history.pushState({}, '', "#" + href.replace(base, ""));
             }
 
             href = zh ? href : "http://www.zerohedge.com" + href;
             href = href.replace("/articles", "/");
             load(href, true);
             return false;
+         });
+         $html.find(".submitted").each(function(){
+            var date = $(this).text();
+            $(this).text(date);
          });
 
          // Show

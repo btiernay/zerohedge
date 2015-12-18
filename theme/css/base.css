@@ -269,11 +269,8 @@ h6:hover .header-link {
    border-radius: 6px 0 6px 6px;
 }
 
-#wrapper {
-   margin-top: 6em;
-}
-
 #content {
+   margin-top: 6em;
    font-size: 1.4em;
 }
 
@@ -1925,11 +1922,6 @@ body {
    background: #fff;
 }
 
-#header,
-#content {
-   width: 100%;
-}
-
 #header {
    min-height: 70px;
    margin-bottom: 0px;
@@ -2063,10 +2055,6 @@ body.sidebars #squeeze {
 
 #squeeze-content {
    padding-bottom: 15px;
-}
-
-#inner-content {
-   padding: 4px 16px;
 }
 
 .node {
@@ -2912,10 +2900,6 @@ LI.sticky {
    text-transform: uppercase;
    border: none;
    background-color: none;
-}
-
-#inner-content {
-   padding: 0px 14px 0px 4px;
 }
 
 #inner-content img {
