@@ -269,11 +269,8 @@ h6:hover .header-link {
    border-radius: 6px 0 6px 6px;
 }
 
-#wrapper {
-   margin-top: 6em;
-}
-
 #content {
+   margin-top: 1em;
    font-size: 1.4em;
 }
 
@@ -1269,7 +1266,7 @@ table#content-field-overview .content-new {
 }
 
 .rteindent2 {
-   margin-left: 80px;
+   margin-left: 3em;
 }
 
 .rteindent3 {
@@ -1895,16 +1892,6 @@ blockquote p {
    width: inherit !important;
 }
 
-body {
-   margin: 0;
-   padding: 0;
-   min-width: 750px;
-   padding-top: 5px;
-   padding-bottom: 20px;
-   font-size: 11pt;
-   color: #000;
-}
-
 .block-block.sticky {
    position: fixed;
    top: 0;
@@ -1923,11 +1910,6 @@ body {
    margin: 0 auto;
    width: 95%;
    background: #fff;
-}
-
-#header,
-#content {
-   width: 100%;
 }
 
 #header {
@@ -2065,16 +2047,8 @@ body.sidebars #squeeze {
    padding-bottom: 15px;
 }
 
-#inner-content {
-   padding: 4px 16px;
-}
-
 .node {
    margin: .5em 0 1em 0;
-}
-
-.node .content {
-   margin: 2em 0 .5em 0;
 }
 
 .comment .content {
@@ -2092,7 +2066,7 @@ h1,
 h2,
 h3,
 h4 {
-   padding-bottom: 1em;
+   padding-bottom: 0.5em;
    margin: 10px 0;
    line-height: 125%;
 }
@@ -2123,11 +2097,18 @@ h4 {
    margin: 0 auto;
 }
 
+.content-box-1 a img {
+   border: 1px solid #ddd;
+   background-color: #FFF;
+   padding: 8px;
+}
+
 .submitted {
    color: #444 !important;
    font-weight: bold;
+   font-size: 1.3em;
    width: 100%;
-   margin-bottom: 5px;
+   margin-bottom: 1em;
 }
 
 .links {
@@ -2468,10 +2449,7 @@ div.edit-last-name-wrapper {
    float: left;
    clear: left;
    width: 160px;
-   margin: 1em 1em 0 0;
-   border: 1px solid #ddd;
-   background-color: #FFF;
-   padding: 8px;
+   margin: 0 1em 0 0;
 }
 
 .view-newsflash-pages-after-main .submitted + a img {
@@ -2912,10 +2890,6 @@ LI.sticky {
    text-transform: uppercase;
    border: none;
    background-color: none;
-}
-
-#inner-content {
-   padding: 0px 14px 0px 4px;
 }
 
 #inner-content img {
