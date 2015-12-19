@@ -26,8 +26,7 @@ $(function () {
          var $html = $(data).find("#inner-content");
 
          // Remove useless content
-         $html.find("h1:empty, .links,script,.js-links,.similar-box,.content-box-1 > .picture, .node > .picture, .node .clear-block, .tabs, .scomments_info a").remove();
-         $html.find(".node .submitted").nextUntil(".content").remove();
+         clean($html);
 
          // Make images abosolute
          images($html);
@@ -43,7 +42,6 @@ $(function () {
 
          // Show
          $content.html($html);
-         console.log($content.html())
 
          if (scroll) {
             document.body.scrollIntoView();
@@ -63,10 +61,22 @@ $(function () {
 
    function images($html) {
       $html.find("img").each(function () {
-         var src = $(this).attr("src");
+         // Fade in on loads
+         var $img = $(this);
+         $img.hide().bind("load", function () {
+            $img.fadeIn();
+         });
+
+         // Update absolute location
+         var src = $img.attr("src");
          src = src.indexOf("http://") >= 0 ? src : base + src;
          this.src = src;
       });
+   }
+
+   function clean($html) {
+      $html.find("h1:empty, .links,script,.js-links,.similar-box,.content-box-1 > .picture, .content-box-1 > br, .node > .picture, .node .clear-block, .tabs, .scomments_info a").remove();
+      $html.find(".node .submitted").nextUntil(".content").remove();
    }
 
    function submitted($html) {
@@ -125,8 +135,6 @@ $(function () {
          '<input type="radio" disabled="disabled" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>' +
          '<input type="radio" disabled="disabled" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>' +
          '</fieldset>');
-
-
 
       var ratingId = "";
       if (rating == 0.5) {
