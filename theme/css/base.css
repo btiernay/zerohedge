@@ -39,6 +39,16 @@ div.col-md-9 img {
    margin-left: 15px;
 }
 
+#q:focus {
+   border-color: gainsboro;
+}
+
+.search-results strong {
+   background-color: beige;
+   padding: 3px;
+   border-radius: 3px;
+}
+
 /****** Style Star Rating Widget *****/
 
 .rating-value {
@@ -122,11 +132,11 @@ a:focus {
 }
 
 .navbar-brand {
- background: url(../img/logo.png) no-repeat left center;
- background-size: 14%;
- padding-left: 35px;
- font-size: 2em;
- margin-left: 10px !important;
+   background: url(../img/logo.png) no-repeat left center;
+   background-size: 14%;
+   padding-left: 35px;
+   font-size: 2em;
+   margin-left: 10px !important;
 }
 
 .header-link {
@@ -153,9 +163,9 @@ h6:hover .header-link {
 }
 
 .btn-default {
-    color: #fff;
-    background-color: #656565;
-    border-color: #95a5a6;
+   color: #fff;
+   background-color: #656565;
+   border-color: #95a5a6;
 }
 
 @media (min-width: 1200px) {
@@ -554,7 +564,7 @@ tr.merge-up th {
    background-image: none;
    display: inline;
    list-style-type: none;
-   padding: 0.5em;
+   padding: 0.2em;
 }
 
 .pager-current {
@@ -2118,6 +2128,10 @@ table {
 .form-item label {
    font-size: 1em;
    color: #222;
+}
+
+.item-list {
+   margin-bottom: 3em;
 }
 
 .item-list .title {
