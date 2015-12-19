@@ -120,10 +120,12 @@ $(function () {
       var $rating = $html.find(".fivestar-static-form-item");
       var text = $rating.find(".average-rating").text().replace("Average: ", "");
       var rating = Math.round(+text * 2) / 2;
+      var votes = $rating.find(".total-votes").text();
+
       $rating.html(
          '<h3>Rating</h3>' +
          '<fieldset class="rating">' +
-         '<span class="rating-value">' + text + '</span>' +
+         '<span class="rating-value">' + text + ' ' + votes + '</span>' +
          '<input type="radio" disabled="disabled" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>' +
          '<input type="radio" disabled="disabled" id="star4half" name="rating" value="4 and a half" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>' +
          '<input type="radio" disabled="disabled" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>' +
