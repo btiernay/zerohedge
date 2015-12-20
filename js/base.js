@@ -147,9 +147,13 @@ $(function () {
          $info.find("a").remove();
          $info.text($info.text().replace("\|", ""));
 
+         // Remove blank lines
          $comment.find(".comment-content p").each(function () {
             var $text = $(this);
             $text.html($text.html().replace(/&nbsp;/g, ''));
+            if ($text.text().trim() == "") {
+               $text.remove();
+            }
          });
       });
    }
