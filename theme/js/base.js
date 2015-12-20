@@ -4,44 +4,39 @@ $(function () {
    var url = base + window.location.hash.replace("#", "");
    var $content = $("#content");
 
-   bind();
-   load(url, false);
+   init();
+
+   function init() {
+      bind();
+      load(url, false);
+   }
 
    function bind() {
       $("#q").keyup(debounce(function () {
          var q = $(this).val();
+
          if (q == "") {
             back();
-            return;
+         } else {
+            search(q);
          }
-
-         search(q);
-      }, 250));
+      }, 300));
 
       $(window).on("popstate", back);
    }
 
    function load(url, scroll) {
       get(url, function (data) {
-         var $html = $(data).find("#inner-content");
+         var $page = $(data).find("#inner-content");
 
-         // Remove useless content
-         clean($html);
+         clean($page);
+         images($page);
+         link($page);
+         submitted($page);
+         rating($page);
+         comments($page);
 
-         // Make images abosolute
-         images($html);
-
-         // Update links
-         link($html);
-
-         // Update submitted
-         submitted($html)
-
-         // Update rating
-         rating($html)
-
-         // Show
-         $content.html($html);
+         show($page);
 
          if (scroll) {
             document.body.scrollIntoView();
@@ -51,16 +46,17 @@ $(function () {
 
    function search(q) {
       get('http://www.zerohedge.com/search/apachesolr_search/' + encodeURIComponent(q), function (data) {
-         var $html = $(data).find(".search-results");
-         link($html);
+         var $page = $(data).find(".search-results");
+         link($page);
 
          // Show
-         $content.html($html);
+         // Show
+         show($page);
       });
    }
 
-   function images($html) {
-      $html.find("img").each(function () {
+   function images($page) {
+      $page.find("img").each(function () {
          // Fade in on loads
          var $img = $(this);
          $img.hide().bind("load", function () {
@@ -74,13 +70,13 @@ $(function () {
       });
    }
 
-   function clean($html) {
-      $html.find("h1:empty, .links,script,.js-links,.similar-box,.content-box-1 > .picture, .content-box-1 > br, .node > .picture, .node .clear-block, .tabs, .scomments_info a").remove();
-      $html.find(".node .submitted").nextUntil(".content").remove();
+   function clean($page) {
+      $page.find("h1:empty, .links,script,.js-links,.similar-box,.content-box-1 > .picture, .content-box-1 > br, .node > .picture, .node .clear-block, .tabs").remove();
+      $page.find(".node .submitted").nextUntil(".content").remove();
    }
 
-   function submitted($html) {
-      $html.find(".submitted").each(function () {
+   function submitted($page) {
+      $page.find(".submitted").each(function () {
          var $date = $(this);
          var text = $(this).text();
          var date = text.replace("Submitted by Tyler Durden on ", "");
@@ -99,9 +95,9 @@ $(function () {
       });
    }
 
-   function link($html) {
+   function link($page) {
       // Update links
-      $html.find("a").click(function (data) {
+      $page.find("a").click(function (data) {
          var href = $(this).attr('href');
          var zh = href.indexOf("www.zerohedge.com") > 0;
 
@@ -116,14 +112,16 @@ $(function () {
       });
    }
 
-   function rating($html) {
-      var $rating = $html.find(".fivestar-static-form-item");
+   function rating($page) {
+      var $rating = $page.find(".fivestar-static-form-item");
       var text = $rating.find(".average-rating").text().replace("Average: ", "");
       var rating = Math.round(+text * 2) / 2;
+      var votes = $rating.find(".total-votes").text();
+
       $rating.html(
          '<h3>Rating</h3>' +
          '<fieldset class="rating">' +
-         '<span class="rating-value">' + text + '</span>' +
+         '<span class="rating-value">' + text + ' ' + votes + '</span>' +
          '<input type="radio" disabled="disabled" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>' +
          '<input type="radio" disabled="disabled" id="star4half" name="rating" value="4 and a half" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>' +
          '<input type="radio" disabled="disabled" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>' +
@@ -136,30 +134,28 @@ $(function () {
          '<input type="radio" disabled="disabled" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>' +
          '</fieldset>');
 
-      var ratingId = "";
-      if (rating == 0.5) {
-         ratingId = "#starhalf";
-      } else if (rating == 1.0) {
-         ratingId = "#star1";
-      } else if (rating == 1.5) {
-         ratingId = "#star1half";
-      } else if (rating == 2.0) {
-         ratingId = "#star2";
-      } else if (rating == 2.5) {
-         ratingId = "#star2half";
-      } else if (rating == 3.0) {
-         ratingId = "#star3";
-      } else if (rating == 3.5) {
-         ratingId = "#star3half";
-      } else if (rating == 4.0) {
-         ratingId = "#star4";
-      } else if (rating == 4.5) {
-         ratingId = "#star4half";
-      } else if (rating == 5.0) {
-         ratingId = "#star5";
-      }
-
+      var ratingId = "#star" + parseInt(rating) + (rating % 1 == 0.5 ? "half" : "");
       $rating.find(ratingId).attr("checked", true);
+   }
+
+   function comments($page) {
+      var $comments = $page.find("#comments");
+      $page.find(".non_toggle_area").each(function () {
+         var $comment = $(this);
+
+         var $info = $comment.find(".scomments_info");
+         $info.find("a").remove();
+         $info.text($info.text().replace("\|", ""));
+
+         $comment.find(".comment-content p").each(function () {
+            var $text = $(this);
+            $text.html($text.html().replace(/&nbsp;/g, ''));
+         });
+      });
+   }
+
+   function show($page) {
+      $content.html($page);
    }
 
    function get(url, callback) {
@@ -170,6 +166,21 @@ $(function () {
       var url = base + location.href.replace(local, "");
       load(url, false);
    }
+
+   function parseDate(s) {
+      var re = /.*(\d\d)\/(\d\d)\/(\d{4}) (?:- )?(\d\d):(\d\d).*/;
+      var m = re.exec(s);
+      return m ? new Date(m[3], m[1] - 1, m[2], m[4], m[5]) : null;
+   }
+
+   function isToday(td) {
+      var d = new Date();
+      return td.getDate() == d.getDate() && td.getMonth() == d.getMonth() && td.getFullYear() == d.getFullYear();
+   }
+
+   /**
+    * Utilities
+    */
 
    function debounce(func, wait, immediate) {
       var timeout;
@@ -186,16 +197,5 @@ $(function () {
          if (callNow) func.apply(context, args);
       };
    };
-
-   function parseDate(s) {
-      var re = /.*(\d\d)\/(\d\d)\/(\d{4}) (?:- )?(\d\d):(\d\d).*/;
-      var m = re.exec(s);
-      return m ? new Date(m[3], m[1] - 1, m[2], m[4], m[5]) : null;
-   }
-
-   function isToday(td) {
-      var d = new Date();
-      return td.getDate() == d.getDate() && td.getMonth() == d.getMonth() && td.getFullYear() == d.getFullYear();
-   }
 
 });

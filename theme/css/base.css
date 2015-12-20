@@ -87,9 +87,6 @@ div.col-md-9 img {
    float: right;
 }
 
-
-/***** CSS Magic to Highlight Stars on Hover *****/
-
 .rating > input:checked ~ label {
    color: #FFD700;
 }
@@ -116,13 +113,13 @@ a:focus {
 
 .pager li>a:hover,
 .pager li>span:hover {
-   background-color: #166aa2;
+   background-color: #2c3e50;
 }
 
 .navbar-default {
    background-color: #2c2c2c;
-   border-top: 3px solid #656565;
-   border-bottom: 3px solid #656565;
+   border-top: 1px solid #656565;
+   border-bottom: 1px solid #656565;
 }
 
 .navbar-default .navbar-brand:hover,
@@ -3012,6 +3009,10 @@ div.comment-content {
    height: 100%;
    min-height: 50px;
    padding: 0 10px 10px;
+}
+
+div.comment-content p:last-child {
+   margin-bottom: 0;
 }
 
 span.comment-name {
