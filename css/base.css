@@ -104,10 +104,6 @@ a:focus {
    color: #166aa2;
 }
 
-.content > p:last-child::after {
-   content: " - Remember this";
-}
-
 .pager li>a,
 .pager li>span {
    background-color: black;
@@ -2131,6 +2127,7 @@ table {
 }
 
 .item-list {
+   margin-top: 3em;
    margin-bottom: 3em;
 }
 
@@ -2850,6 +2847,10 @@ LI.sticky {
    max-width: 100%;
    height: auto;
    border-radius: 5px;
+}
+
+#inner-content .content-box-1 img {
+   margin-top: 0.4em;
 }
 
 .taxonomy {
