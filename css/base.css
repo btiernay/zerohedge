@@ -61,6 +61,8 @@ div.col-md-9 img {
     height:100%;
     float:right;
     overflow:hidden;
+   margin: 0;
+   margin-top: 4px;
 
     -webkit-transition: width 0.3s;
     -moz-transition: width 0.3s;
