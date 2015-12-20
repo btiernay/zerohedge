@@ -1,9 +1,11 @@
 $(function () {
+   // Constants
    var local = document.URL;
    var base = 'http://www.zerohedge.com';
    var url = base + window.location.hash.replace("#", "");
    var $content = $("#content");
 
+   // Initialize
    init();
 
    function init() {
@@ -13,7 +15,7 @@ $(function () {
 
    function bind() {
       $("#q").keyup(debounce(function () {
-         var q = $(this).val();
+         var q = $(this).val().trim();
 
          if (q == "") {
             back();
@@ -29,35 +31,84 @@ $(function () {
       get(url, function (data) {
          var $page = $(data).find("#inner-content");
 
+         // Update content
          clean($page);
-         images($page);
-         link($page);
          submitted($page);
+         links($page);
+         images($page);
+         article($page);
          rating($page);
          comments($page);
 
-         show($page);
-
-         if (scroll) {
-            document.body.scrollIntoView();
-         }
+         // Display
+         show($page, scroll);
       });
    }
 
    function search(q) {
-      get('http://www.zerohedge.com/search/apachesolr_search/' + encodeURIComponent(q), function (data) {
+      get(base + '/search/apachesolr_search/' + encodeURIComponent(q), function (data) {
          var $page = $(data).find(".search-results");
-         link($page);
+         links($page);
 
-         // Show
-         // Show
-         show($page);
+         // Display
+         show($page, true);
+      });
+   }
+
+   function clean($page) {
+      $page.find("h1:empty, .links,script,.js-links,.similar-box,.content-box-1 > .picture, .content-box-1 > br, .node > .picture, .node .clear-block, .tabs").remove();
+      $page.find(".node .submitted").nextUntil(".content").remove();
+   }
+
+   function submitted($page) {
+      $page.find(".submitted").each(function () {
+         var $date = $(this);
+         var text = $(this).text().replace("Submitted by Tyler Durden on ", "");
+         var date = parseDate(text);
+
+         if (isToday(date)) {
+            var hr = date.getHours(),
+               min = date.getMinutes();
+
+            if (min < 10) {
+               min = "0" + min;
+            }
+            var ampm = hr < 12 ? "am" : "pm";
+            text = (hr <= 12 ? hr : hr - 12) + ":" + min + " " + ampm;
+         }
+
+         $date.text(text);
+      });
+   }
+
+   function links($page) {
+      // Update links
+      $page.find("a").click(function (data) {
+         var href = $(this).attr('href');
+         var relative = href.indexOf("http://") < 0;
+         var site = href.indexOf(base) >= 0;
+
+         if (!relative && !site) {
+            this.target = "_blank";
+            return;
+         }
+
+         var hash = href.replace(base, "");
+         history.pushState({}, '', "#" + hash);
+
+         href = site ? href : base + href;
+         href = href.replace("/articles", "/");
+
+         // Load
+         load(href, true);
+
+         return false;
       });
    }
 
    function images($page) {
       $page.find("img").each(function () {
-         // Fade in on loads
+         // Fade-in on loads
          var $img = $(this);
          $img.hide().bind("load", function () {
             $img.fadeIn();
@@ -70,46 +121,8 @@ $(function () {
       });
    }
 
-   function clean($page) {
-      $page.find("h1:empty, .links,script,.js-links,.similar-box,.content-box-1 > .picture, .content-box-1 > br, .node > .picture, .node .clear-block, .tabs").remove();
-      $page.find(".node .submitted").nextUntil(".content").remove();
-   }
-
-   function submitted($page) {
-      $page.find(".submitted").each(function () {
-         var $date = $(this);
-         var text = $(this).text();
-         var date = text.replace("Submitted by Tyler Durden on ", "");
-         var d = parseDate(date);
-         if (isToday(d)) {
-            var hr = d.getHours();
-            var min = d.getMinutes();
-            if (min < 10) {
-               min = "0" + min;
-            }
-            var ampm = hr < 12 ? "am" : "pm";
-            $date.text((hr <= 12 ? hr : hr - 12) + ":" + min + " " + ampm);
-         } else {
-            $date.text(date);
-         }
-      });
-   }
-
-   function link($page) {
-      // Update links
-      $page.find("a").click(function (data) {
-         var href = $(this).attr('href');
-         var zh = href.indexOf("www.zerohedge.com") > 0;
-
-         if (zh || href.indexOf("http://") < 0) {
-            history.pushState({}, '', "#" + href.replace(base, ""));
-         }
-
-         href = zh ? href : "http://www.zerohedge.com" + href;
-         href = href.replace("/articles", "/");
-         load(href, true);
-         return false;
-      });
+   function article($page) {
+      $page.children("p:first-child").css({borderRadius: "5px", backgroundColor: "#F5F5DC", padding: "10px", height: "auto", color: "black"});
    }
 
    function rating($page) {
@@ -119,7 +132,6 @@ $(function () {
       var votes = $rating.find(".total-votes").text();
 
       $rating.html(
-         '<h3>Rating</h3>' +
          '<fieldset class="rating">' +
          '<span class="rating-value">' + text + ' ' + votes + '</span>' +
          '<input type="radio" disabled="disabled" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>' +
@@ -147,15 +159,22 @@ $(function () {
          $info.find("a").remove();
          $info.text($info.text().replace("\|", ""));
 
+         // Remove blank lines
          $comment.find(".comment-content p").each(function () {
             var $text = $(this);
             $text.html($text.html().replace(/&nbsp;/g, ''));
+            if ($text.text().trim() == "") {
+               $text.remove();
+            }
          });
       });
    }
 
-   function show($page) {
+   function show($page, scroll) {
       $content.html($page);
+      if (scroll) {
+         document.body.scrollIntoView();
+      }
    }
 
    function get(url, callback) {
@@ -173,14 +192,14 @@ $(function () {
       return m ? new Date(m[3], m[1] - 1, m[2], m[4], m[5]) : null;
    }
 
+   /**
+    * Utilities
+    */
+
    function isToday(td) {
       var d = new Date();
       return td.getDate() == d.getDate() && td.getMonth() == d.getMonth() && td.getFullYear() == d.getFullYear();
    }
-
-   /**
-    * Utilities
-    */
 
    function debounce(func, wait, immediate) {
       var timeout;
