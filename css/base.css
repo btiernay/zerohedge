@@ -87,9 +87,6 @@ div.col-md-9 img {
    float: right;
 }
 
-
-/***** CSS Magic to Highlight Stars on Hover *****/
-
 .rating > input:checked ~ label {
    color: #FFD700;
 }
@@ -3012,6 +3009,10 @@ div.comment-content {
    height: 100%;
    min-height: 50px;
    padding: 0 10px 10px;
+}
+
+div.comment-content p:last-child {
+   margin-bottom: 0;
 }
 
 span.comment-name {
