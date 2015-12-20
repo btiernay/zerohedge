@@ -126,7 +126,7 @@ a:focus {
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-nav>li>a:hover,
 .navbar-default .navbar-nav>li>a:focus {
-   color: #656565;
+   color: white;
 }
 
 .navbar-brand {
@@ -136,7 +136,7 @@ a:focus {
    padding-left: 78px;
    font-size: 2em;
    margin-left: 0px !important;
-   -webkit-text-stroke-width: 2px;
+   -webkit-text-stroke-width: 1px;
    -webkit-text-stroke-color: white;
 }
 
