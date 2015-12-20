@@ -3,7 +3,11 @@ $(function () {
    var local = document.URL;
    var base = 'http://www.zerohedge.com';
    var url = base + window.location.hash.replace("#", "");
+
+   // Elements
+   var $window = $(window);
    var $content = $("#content");
+   var $topLink = $('.cd-top');
 
    // Initialize
    init();
@@ -14,8 +18,43 @@ $(function () {
    }
 
    function bind() {
-      $("#q").keyup(debounce(function () {
-         var q = $(this).val().trim();
+      var submitIcon = $('.searchbox-icon');
+      var inputBox = $('.searchbox-input');
+      var $search = $('.searchbox');
+      var isOpen = false;
+
+      $search.submit(function (e) {
+         e.preventDefault();
+         submitIcon.click();
+      })
+
+      submitIcon.click(function () {
+         if (isOpen == false) {
+            inputBox.val("");
+            $search.addClass('searchbox-open');
+            inputBox.focus();
+            isOpen = true;
+         } else {
+            $search.removeClass('searchbox-open');
+            inputBox.focusout();
+            isOpen = false;
+         }
+      });
+      submitIcon.mouseup(function () {
+         return false;
+      });
+      $search.mouseup(function () {
+         return false;
+      });
+      $(document).mouseup(function () {
+         if (isOpen == true) {
+            $('.searchbox-icon').css('display', 'block');
+            submitIcon.click();
+         }
+      });
+
+      inputBox.keyup(debounce(function () {
+         var q = inputBox.val().trim();
 
          if (q == "") {
             back();
@@ -24,7 +63,21 @@ $(function () {
          }
       }, 300));
 
-      $(window).on("popstate", back);
+      $window.on("popstate", back);
+
+      // Top link
+      $window.scroll(function () {
+         ($window.scrollTop() > 300) ? $topLink.addClass('cd-is-visible'): $topLink.removeClass('cd-is-visible cd-fade-out');
+         if ($window.scrollTop() > 1200) {
+            $topLink.addClass('cd-fade-out');
+         }
+      });
+      $topLink.on('click', function (event) {
+         event.preventDefault();
+         $('body,html').animate({
+            scrollTop: 0,
+         }, 700);
+      });
    }
 
    function load(url, scroll) {
@@ -122,18 +175,24 @@ $(function () {
    }
 
    function article($page) {
-      $page.children("p:first-child").css({borderRadius: "5px", backgroundColor: "#F5F5DC", padding: "10px", height: "auto", color: "black"});
+      $page.children("p:first-child").css({
+         borderRadius: "5px",
+         backgroundColor: "#F5F5DC",
+         padding: "10px",
+         height: "auto",
+         color: "black"
+      });
    }
 
    function rating($page) {
       var $rating = $page.find(".fivestar-static-form-item");
-      var text = $rating.find(".average-rating").text().replace("Average: ", "");
+      var text = $rating.find(".average-rating").text().match(/[0-9 , \.]+/);
       var rating = Math.round(+text * 2) / 2;
-      var votes = $rating.find(".total-votes").text();
+      var votes = $rating.find(".total-votes").text().match(/\d+/);
 
       $rating.html(
          '<fieldset class="rating">' +
-         '<span class="rating-value">' + text + ' ' + votes + '</span>' +
+         '<span class="rating-value"><b>' + text + '</b> from ' + votes + ' votes</span>' +
          '<input type="radio" disabled="disabled" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>' +
          '<input type="radio" disabled="disabled" id="star4half" name="rating" value="4 and a half" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>' +
          '<input type="radio" disabled="disabled" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>' +
@@ -167,6 +226,8 @@ $(function () {
                $text.remove();
             }
          });
+
+         //$comment.find(".comment-content a").text("link");
       });
    }
 

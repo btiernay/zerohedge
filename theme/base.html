@@ -32,16 +32,14 @@
 
             <!-- Main title -->
             <a class="navbar-brand" href=".">ZERO HEDGE</a>
+         </div>
 
-            <!-- Search -->
-            <div class="col-sm-3 col-md-3 pull-right">
-               <form class="navbar-form" role="search">
-                  <div class="input-group">
-                     <input type="text" class="form-control" placeholder="Search" name="srch-term" id="q">
-                     <div class="input-group-btn">
-                        <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-                     </div>
-                  </div>
+         <!-- Search -->
+         <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <div class="searchbox-container col-sm-3 col-md-3 pull-right">
+               <form class="searchbox navbar-form" role="search">
+                  <input type="search" placeholder="Search..." autocomplete="off" name="search" class="searchbox-input">
+                  <span class="searchbox-icon"><i class="fa fa-search"></i></span>
                </form>
             </div>
          </div>
@@ -49,6 +47,7 @@
    </div>
 
    <div id="content" class="container" role="main"></div>
+   <a href="#0" class="cd-top"><i class="fa fa-arrow-up"></i></a>
 
    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
