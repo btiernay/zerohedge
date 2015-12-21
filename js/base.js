@@ -181,7 +181,7 @@ $(function () {
 
    function article($page) {
       $page.children("p:first-child").css({
-         borderRadius: "5px",
+         borderRadius: "3px",
          backgroundColor: "rgb(114, 114, 114)",
          padding: "10px",
          height: "auto",
