@@ -161,7 +161,7 @@ div.col-md-9 img {
   background-color: #e86256;
   opacity: 1;
 }
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 640px) {
   .cd-top {
     left: 20px;
     bottom: 20px;
