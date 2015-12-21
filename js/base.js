@@ -187,8 +187,8 @@ $(function () {
    function rating($page) {
       var $rating = $page.find(".fivestar-static-form-item");
       var text = $rating.find(".average-rating").text().match(/[0-9 , \.]+/);
-      var rating = Math.round(+text * 2) / 2;
-      var votes = $rating.find(".total-votes").text().match(/\d+/);
+      var rating = Math.round(+text * 2) / 2 || 0;
+      var votes = $rating.find(".total-votes").text().match(/\d+/) || 0;
 
       $rating.html(
          '<fieldset class="rating">' +
