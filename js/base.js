@@ -182,10 +182,10 @@ $(function () {
    function article($page) {
       $page.children("p:first-child").css({
          borderRadius: "5px",
-         backgroundColor: "#F5F5DC",
+         backgroundColor: "rgb(114, 114, 114)",
          padding: "10px",
          height: "auto",
-         color: "black"
+         color: "white"
       });
    }
 
