@@ -235,7 +235,7 @@ $(function () {
             }
          });
 
-         $comment.find("a").text("link");
+         $comment.find(".comment-content a").text("link");
       });
    }
 
