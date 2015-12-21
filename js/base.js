@@ -21,7 +21,14 @@ $(function () {
       var submitIcon = $('.searchbox-icon');
       var inputBox = $('.searchbox-input');
       var $search = $('.searchbox');
+      var $home = $('.navbar-brand');
       var isOpen = false;
+
+      $home.click(function(e){
+         history.pushState({}, 'Zero Hedge', '/');
+         load(base, true);
+         e.preventDefault();
+      });
 
       $search.submit(function (e) {
          e.preventDefault();
@@ -74,9 +81,7 @@ $(function () {
       });
       $topLink.on('click', function (event) {
          event.preventDefault();
-         $('body,html').animate({
-            scrollTop: 0,
-         }, 700);
+         $('body').animate({scrollTop: 0}, 700);
       });
    }
 
