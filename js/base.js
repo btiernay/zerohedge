@@ -25,7 +25,7 @@ $(function () {
       var isOpen = false;
 
       $home.click(function(e){
-         history.pushState({}, 'Zero Hedge', '/');
+         history.pushState({}, 'Zero Hedge', local);
          load(base, true);
          e.preventDefault();
       });
