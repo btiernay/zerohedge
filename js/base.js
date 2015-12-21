@@ -234,6 +234,8 @@ $(function () {
                $text.remove();
             }
          });
+
+         $comment.find(".comment-content a").text("link");
       });
    }
 
