@@ -165,8 +165,8 @@ $(function () {
    }
 
    function images($page) {
-      $page.find("img").each(function () {
-         // Fade-in on loads
+      $page.find("img,video").each(function () {
+         // Fade-in on load
          var $img = $(this);
          $img.hide().bind("load", function () {
             $img.fadeIn();
