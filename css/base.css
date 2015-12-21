@@ -112,9 +112,10 @@ div.col-md-9 img {
 }
 
 .search-results strong {
-   background-color: beige;
-   padding: 3px;
+   background-color: #000;
+   padding: 3px 7px;
    border-radius: 3px;
+   color: #FFF;
 }
 
 /* Top link */
