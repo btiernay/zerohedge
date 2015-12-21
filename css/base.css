@@ -368,6 +368,10 @@ h6:hover .header-link {
    margin-bottom: 3em;
 }
 
+#comments .non_toggle_area {
+   overflow-x: hidden;
+}
+
 .node-unpublished {
    background-color: #fff4f4;
 }
