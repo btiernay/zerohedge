@@ -251,7 +251,7 @@ a:focus {
 
 .pager li>a {
    border-radius: 3px !important;
-   box-shadow: 0px 10px 20px -10px #000 !important;
+   box-shadow: 0px 10px 20px -13px #000 !important;
 }
 
 .pager li>a:hover,
