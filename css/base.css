@@ -1912,7 +1912,7 @@ div.edit-feed-me-wrapper {
 }
 
 blockquote {
-   margin: 1em 2em !important;
+   margin: 1em 0 1em 1em !important;
 }
 
 blockquote p {
