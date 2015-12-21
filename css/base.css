@@ -143,6 +143,7 @@ div.col-md-9 img {
 .rating {
    border: none;
    float: left;
+   white-space: nowrap;
 }
 
 .rating > input {
