@@ -41,6 +41,7 @@ div.col-md-9 img {
    border-radius: 3px;
 }
 
+
 /* Search */
 
 .searchbox-container {
@@ -117,8 +118,8 @@ div.col-md-9 img {
    width: 300px;
 }
 
-.searchbox-open .searchbox-input {
-}
+.searchbox-open .searchbox-input {}
+
 
 /* Top link */
 
@@ -127,65 +128,73 @@ div.col-md-9 img {
 }
 
 .cd-top {
-  display: inline-block;
-  height: 40px;
-  width: 40px;
-  position: fixed;
-  bottom: 100px;
-  right: 10px;
-  z-index: 10;
-  /* image replacement properties */
-  overflow: hidden;
-  white-space: nowrap;
-  visibility: hidden;
-  opacity: 0;
-  -webkit-transition: opacity .3s 0s, visibility 0s .3s;
-  -moz-transition: opacity .3s 0s, visibility 0s .3s;
-  transition: opacity .3s 0s, visibility 0s .3s;
+   display: inline-block;
+   height: 40px;
+   width: 40px;
+   position: fixed;
+   bottom: 100px;
+   right: 10px;
+   z-index: 10;
+   /* image replacement properties */
+   overflow: hidden;
+   white-space: nowrap;
+   visibility: hidden;
+   opacity: 0;
+   -webkit-transition: opacity .3s 0s, visibility 0s .3s;
+   -moz-transition: opacity .3s 0s, visibility 0s .3s;
+   transition: opacity .3s 0s, visibility 0s .3s;
 }
-.cd-top.cd-is-visible, .cd-top.cd-fade-out, .no-touch .cd-top:hover {
-  -webkit-transition: opacity .3s 0s, visibility 0s 0s;
-  -moz-transition: opacity .3s 0s, visibility 0s 0s;
-  transition: opacity .3s 0s, visibility 0s 0s;
-}
-.cd-top.cd-is-visible {
-  /* the button becomes visible */
-  visibility: visible;
-     color: black;
-  opacity: 1;
-}
-.cd-top.cd-fade-out {
-  /* if the user keeps scrolling down, the button is out of focus and becomes less visible */
-  opacity: .5;
-}
+
+.cd-top.cd-is-visible,
+.cd-top.cd-fade-out,
 .no-touch .cd-top:hover {
-  background-color: #e86256;
-  opacity: 1;
+   -webkit-transition: opacity .3s 0s, visibility 0s 0s;
+   -moz-transition: opacity .3s 0s, visibility 0s 0s;
+   transition: opacity .3s 0s, visibility 0s 0s;
 }
+
+.cd-top.cd-is-visible {
+   /* the button becomes visible */
+   visibility: visible;
+   color: black;
+   opacity: 1;
+}
+
+.cd-top.cd-fade-out {
+   /* if the user keeps scrolling down, the button is out of focus and becomes less visible */
+   opacity: .5;
+}
+
+.no-touch .cd-top:hover {
+   background-color: #e86256;
+   opacity: 1;
+}
+
 @media only screen and (width: 360px) {
-  .cd-top {
-    left: 20px;
-    bottom: 20px;
-  }
+   .cd-top {
+      left: 20px;
+      bottom: 20px;
+   }
 }
+
 @media only screen and (min-width: 1024px) {
-  .cd-top {
-    height: 60px;
-    width: 60px;
-    left: 30px;
-    bottom: 30px;
-  }
+   .cd-top {
+      height: 60px;
+      width: 60px;
+      left: 30px;
+      bottom: 30px;
+   }
 }
 
 
 /* Star rating */
 
 .rating {
-    border: none;
-    float: left;
-    position: relative;
-    margin-bottom: 2em;
-    padding: 0
+   border: none;
+   float: left;
+   position: relative;
+   margin-bottom: 2em;
+   padding: 0
 }
 
 .rating > input {
@@ -224,6 +233,7 @@ div.col-md-9 img {
    display: inline-block;
    color: #000;
 }
+
 
 /* Customization */
 
@@ -2930,7 +2940,7 @@ a.gtflag:hover {
    margin-bottom: 10px;
    margin-top: 3px;
    background-color: #f7f7f7;
-   border-radius: 1em;
+   border-radius: 0.3em;
 }
 
 .text-box .imagecache {
@@ -3082,14 +3092,7 @@ h2.img,
 
 div.toggle_area,
 div.non_toggle_area {
-   border-radius: 5px;
-   border-right: 1px solid #ddd;
-   border-left: 1px solid #ddd;
-   border-top: 1px solid #ddd;
-   border-bottom: 1px solid #ddd;
-   # border-radius: 5px;
-   # -moz-border-radius: 5px;
-   # -webkit-border-radius: 5px;
+   border-left: 5px solid #E2E2E2;
    clear: both;
    margin: 5px 0;
    padding: 0;
@@ -3098,12 +3101,6 @@ div.non_toggle_area {
 div.toggle_label,
 div.non_toggle_label,
 div.toggle_label .own {
-   # border-top-left-radius: 5px;
-   # -moz-border-radius-topleft: 5px;
-   # -webkit-border-top-left-radius: 5px;
-   #border-top-right-radius: 5px;
-   #-moz-border-radius-topright: 5px;
-   #-webkit-border-top-right-radius: 5px;
    line-height: 1.7em;
    margin: 0;
    padding: 2px 5px;
@@ -3111,15 +3108,10 @@ div.toggle_label .own {
 
 div.non_toggle_label {
    background: #fcfcfc;
+   padding-left: 10px;
 }
 
 div.non_toggle_label .own {
-   # border-top-left-radius: 5px;
-   # -moz-border-radius-topleft: 5px;
-   # -webkit-border-top-left-radius: 5px;
-   #border-top-right-radius: 5px;
-   #-moz-border-radius-topright: 5px;
-   #-webkit-border-top-right-radius: 5px;
    line-height: 1.7em;
    margin: 0;
    padding: 2px 5px;
