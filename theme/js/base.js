@@ -1,6 +1,6 @@
 $(function () {
    // Constants
-   var local = document.URL;
+   var local = document.URL.replace(/#.*$/, "");
    var base = 'http://www.zerohedge.com';
    var url = base + window.location.hash.replace("#", "");
 
@@ -21,7 +21,14 @@ $(function () {
       var submitIcon = $('.searchbox-icon');
       var inputBox = $('.searchbox-input');
       var $search = $('.searchbox');
+      var $home = $('.navbar-brand');
       var isOpen = false;
+
+      $home.click(function(e){
+         history.pushState({}, 'Zero Hedge', local);
+         load(base, true);
+         e.preventDefault();
+      });
 
       $search.submit(function (e) {
          e.preventDefault();
@@ -74,9 +81,7 @@ $(function () {
       });
       $topLink.on('click', function (event) {
          event.preventDefault();
-         $('body,html').animate({
-            scrollTop: 0,
-         }, 700);
+         $('body').animate({scrollTop: 0}, 700);
       });
    }
 
@@ -109,7 +114,7 @@ $(function () {
    }
 
    function clean($page) {
-      $page.find("h1:empty, .links,script,.js-links,.similar-box,.content-box-1 > .picture, .content-box-1 > br, .node > .picture, .node .clear-block, .tabs").remove();
+      $page.find("h1:empty, .links,script,.js-links,.similar-box,.content-box-1 > .picture, .content-box-1 > br, .node > .picture, .node .clear-block, .tabs,.quote_start,.quote_end").remove();
       $page.find(".node .submitted").nextUntil(".content").remove();
    }
 
@@ -176,19 +181,19 @@ $(function () {
 
    function article($page) {
       $page.children("p:first-child").css({
-         borderRadius: "5px",
-         backgroundColor: "#F5F5DC",
+         borderRadius: "3px",
+         backgroundColor: "rgb(114, 114, 114)",
          padding: "10px",
          height: "auto",
-         color: "black"
+         color: "white"
       });
    }
 
    function rating($page) {
       var $rating = $page.find(".fivestar-static-form-item");
-      var text = $rating.find(".average-rating").text().match(/[0-9 , \.]+/);
+      var text = $rating.find(".average-rating").text().match(/[0-9 , \.]+/) || "0";
       var rating = Math.round(+text * 2) / 2;
-      var votes = $rating.find(".total-votes").text().match(/\d+/);
+      var votes = $rating.find(".total-votes").text().match(/\d+/) || 0;
 
       $rating.html(
          '<fieldset class="rating">' +
@@ -226,8 +231,6 @@ $(function () {
                $text.remove();
             }
          });
-
-         //$comment.find(".comment-content a").text("link");
       });
    }
 
