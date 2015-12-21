@@ -26,6 +26,7 @@ function bind() {
 
    submitIcon.click(function () {
       if (isOpen == false) {
+         inputBox.val("");
          $search.addClass('searchbox-open');
          inputBox.focus();
          isOpen = true;
