@@ -1,6 +1,6 @@
 $(function () {
    // Constants
-   var local = document.URL;
+   var local = document.URL.replace(/#.*$/, "");
    var base = 'http://www.zerohedge.com';
    var url = base + window.location.hash.replace("#", "");
 
