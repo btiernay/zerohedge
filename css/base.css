@@ -270,7 +270,7 @@ a:focus {
 }
 
 .searchbox-container .fa-search:hover,
-.navbar-default .navbar-brand:hover  {
+.navbar-default .navbar-brand a:hover  {
    color: #727272;
 }
 
