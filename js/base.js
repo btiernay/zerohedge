@@ -3,33 +3,11 @@ $(function () {
    var local = document.URL;
    var base = 'http://www.zerohedge.com';
    var url = base + window.location.hash.replace("#", "");
+
+   // Elements
+   var $window = $(window);
    var $content = $("#content");
-
-   // browser window scroll (in pixels) after which the "back to top" link is shown
-   var offset = 300,
-      //browser window scroll (in pixels) after which the "back to top" link opacity is reduced
-      offset_opacity = 1200,
-      //duration of the top scrolling animation (in ms)
-      scroll_top_duration = 700,
-      //grab the "back to top" link
-      $back_to_top = $('.cd-top');
-
-   //hide or show the "back to top" link
-   $(window).scroll(function(){
-      ( $(this).scrollTop() > offset ) ? $back_to_top.addClass('cd-is-visible') : $back_to_top.removeClass('cd-is-visible cd-fade-out');
-      if( $(this).scrollTop() > offset_opacity ) {
-         $back_to_top.addClass('cd-fade-out');
-      }
-   });
-
-   //smooth scroll to top
-   $back_to_top.on('click', function(event){
-      event.preventDefault();
-      $('body,html').animate({
-         scrollTop: 0 ,
-          }, scroll_top_duration
-      );
-   });
+   var $topLink = $('.cd-top');
 
    // Initialize
    init();
@@ -45,7 +23,7 @@ $(function () {
       var $search = $('.searchbox');
       var isOpen = false;
 
-      $search.submit(function(e){
+      $search.submit(function (e) {
          e.preventDefault();
          submitIcon.click();
       })
@@ -85,7 +63,21 @@ $(function () {
          }
       }, 300));
 
-      $(window).on("popstate", back);
+      $window.on("popstate", back);
+
+      // Top link
+      $window.scroll(function () {
+         ($window.scrollTop() > 300) ? $topLink.addClass('cd-is-visible'): $topLink.removeClass('cd-is-visible cd-fade-out');
+         if ($window.scrollTop() > 1200) {
+            $topLink.addClass('cd-fade-out');
+         }
+      });
+      $topLink.on('click', function (event) {
+         event.preventDefault();
+         $('body,html').animate({
+            scrollTop: 0,
+         }, 700);
+      });
    }
 
    function load(url, scroll) {
@@ -129,7 +121,7 @@ $(function () {
 
          if (isToday(date)) {
             var hr = date.getHours(),
-                min = date.getMinutes();
+               min = date.getMinutes();
 
             if (min < 10) {
                min = "0" + min;
@@ -262,8 +254,8 @@ $(function () {
    }
 
    /**
- * Utilities
- */
+    * Utilities
+    */
 
    function isToday(td) {
       var d = new Date();
@@ -274,7 +266,7 @@ $(function () {
       var timeout;
       return function () {
          var context = this,
-             args = arguments;
+            args = arguments;
          var later = function () {
             timeout = null;
             if (!immediate) func.apply(context, args);
