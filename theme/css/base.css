@@ -269,11 +269,22 @@ a:focus {
    background-color: #2c2c2c;
 }
 
+.searchbox-container .fa-search:hover,
+.navbar-default .navbar-brand:hover  {
+   filter: contrast(33%);
+   -webkit-filter: contrast(33%);
+}
+
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus,
 .navbar-default .navbar-nav>li>a:hover,
 .navbar-default .navbar-nav>li>a:focus {
    color: white !important;
+}
+.navbar-default div.navbar-collapse form
+{
+    border-top:none;
+    box-shadow:none;
 }
 
 .navbar-brand {
