@@ -255,7 +255,8 @@ a:focus {
 }
 
 .pager li>a:hover,
-.pager li>span:hover {
+.pager li>span:hover,
+.pager li>span:active {
    background-color: #727272;
 }
 
