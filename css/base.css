@@ -269,17 +269,17 @@ a:focus {
    background-color: #2c2c2c;
 }
 
-.searchbox-container .fa-search:hover,
-.navbar-default .navbar-brand a:hover  {
-   color: #727272;
-}
-
-.navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus,
-.navbar-default .navbar-nav>li>a:hover,
 .navbar-default .navbar-nav>li>a:focus {
    color: white !important;
 }
+
+.searchbox-container .fa-search:hover,
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-nav>li>a:hover,{
+   color: #727272 !important;
+}
+
 
 .navbar-brand {
    background: url(../img/td.jpeg) no-repeat left center;
