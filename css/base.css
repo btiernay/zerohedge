@@ -270,11 +270,16 @@ a:focus {
 }
 
 .searchbox-container .fa-search:hover,
+.navbar-default .navbar-brand:hover  {
+   filter: contrast(33%);
+   -webkit-filter: contrast(33%);
+}
+
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus,
 .navbar-default .navbar-nav>li>a:hover,
 .navbar-default .navbar-nav>li>a:focus {
-  color: #727272 !important;
+   color: white !important;
 }
 
 .navbar-brand {
@@ -284,6 +289,8 @@ a:focus {
    padding-left: 78px;
    font-size: 2em;
    margin-left: 0px !important;
+   -webkit-text-stroke-width: 1px;
+   -webkit-text-stroke-color: white;
 }
 
 .header-link {
