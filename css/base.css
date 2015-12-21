@@ -271,8 +271,7 @@ a:focus {
 
 .searchbox-container .fa-search:hover,
 .navbar-default .navbar-brand:hover  {
-   filter: contrast(33%);
-   -webkit-filter: contrast(33%);
+   color: #727272;
 }
 
 .navbar-default .navbar-brand:hover,
