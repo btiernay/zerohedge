@@ -82,13 +82,13 @@ $(function () {
       $(window).scroll(function() {
           if($(window).scrollTop() > ($(document).height() - $(window).height()) - 500) {
              var $pager = $(".pager");
-             var href = base + $pager.find(".pager-current").last().next().find("a").attr("href");
+             var href = $pager.find(".pager-current").last().next().find("a").attr("href");
              if (!href) {
                 return;
              }
 
              var selector = $("#comments").length ? "#comments" : null;
-             load(href, false, true, selector);
+             load(base + href, false, true, selector);
           }
       });
 
