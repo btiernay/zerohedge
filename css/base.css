@@ -284,8 +284,6 @@ a:focus {
    padding-left: 78px;
    font-size: 2em;
    margin-left: 0px !important;
-   -webkit-text-stroke-width: 1px;
-   -webkit-text-stroke-color: white;
 }
 
 .header-link {
