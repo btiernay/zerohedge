@@ -220,7 +220,7 @@ div.col-md-9 img {
 }
 
 .rating > input:checked ~ label {
-   color: #FFD700;
+   color: black; /*#FFD700*/
 }
 
 .rating-value {
