@@ -114,7 +114,7 @@ $(function () {
    }
 
    function clean($page) {
-      $page.find("h1:empty, .links,script,.js-links,.similar-box,.content-box-1 > .picture, .content-box-1 > br, .node > .picture, .node .clear-block, .tabs").remove();
+      $page.find("h1:empty, .links,script,.js-links,.similar-box,.content-box-1 > .picture, .content-box-1 > br, .node > .picture, .node .clear-block, .tabs,.quote_start,.quote_end").remove();
       $page.find(".node .submitted").nextUntil(".content").remove();
    }
 
@@ -231,8 +231,6 @@ $(function () {
                $text.remove();
             }
          });
-
-         //$comment.find(".comment-content a").text("link");
       });
    }
 
