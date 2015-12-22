@@ -281,7 +281,7 @@ a:focus {
 .navbar-default .navbar-nav>li>a:focus {
    color: white !important;
 }
-.navbar-default div.navbar-collapse
+.navbar-default div.navbar-collapse form
 {
     border-top:none;
     box-shadow:none;
