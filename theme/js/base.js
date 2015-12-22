@@ -3,6 +3,9 @@ $(function () {
    var local = document.URL.replace(/#.*$/, "");
    var base = 'http://www.zerohedge.com';
    var url = base + window.location.hash.replace("#", "");
+   var state = {
+      url: url
+   };
 
    // Elements
    var $window = $(window);
@@ -87,8 +90,14 @@ $(function () {
                 return;
              }
 
+             var url = base + href;
+             if (state.url == url) {
+                return;
+             }
+
+             console.log("Loading ", url);
              var selector = $("#comments").length ? "#comments" : null;
-             load(base + href, false, true, selector);
+             load(url, false, true, selector);
           }
       });
 
@@ -99,6 +108,7 @@ $(function () {
    }
 
    function load(url, scroll, append, selector) {
+      state.url = url;
       get(url, function (data) {
          var $page = $(data).find("#inner-content");
 
