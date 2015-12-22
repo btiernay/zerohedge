@@ -35,6 +35,13 @@ div.col-md-9 img {
    max-width: 100%;
 }
 
+/* Loading */
+
+#loading {
+   background: url(../img/td.svg) no-repeat center;
+   height: 500px;
+   opacity: 0.2;
+}
 
 /* Search */
 
@@ -274,8 +281,7 @@ a:focus {
    background-color: #2c2c2c;
 }
 
-.searchbox-container .fa-search:hover,
-.navbar-default .navbar-brand:hover {
+.searchbox-container .fa-search:hover {
    filter: contrast(33%);
    -webkit-filter: contrast(33%);
 }
