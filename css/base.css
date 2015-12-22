@@ -15,10 +15,6 @@ h6[id]:before {
    height: 75px;
 }
 
-video, object {
-   max-width: 100%;
-}
-
 ul.nav li.main {
    font-weight: bold;
 }
@@ -284,6 +280,11 @@ a:focus {
 .navbar-default .navbar-nav>li>a:hover,
 .navbar-default .navbar-nav>li>a:focus {
    color: white !important;
+}
+.navbar-default div.navbar-collapse
+{
+    border-top:none;
+    box-shadow:none;
 }
 
 .navbar-brand {
