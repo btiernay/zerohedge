@@ -83,7 +83,7 @@ $(function () {
          }
       });
       $(window).scroll(function() {
-          if($(window).scrollTop() > ($(document).height() - $(window).height()) - 500) {
+          if($(window).scrollTop() > ($(document).height() - $(window).height()) - 1000) {
              var $pager = $(".pager");
              var href = $pager.find(".pager-current").last().next().find("a").attr("href");
              if (!href) {
