@@ -204,7 +204,7 @@ $(function () {
    }
 
    function back() {
-      var url = base + location.href.replace(local, "");
+      var url = base + location.href.replace(local, "").replace("#","");
       load(url);
    }
 
