@@ -246,6 +246,7 @@ $(function () {
          load(base, {
             scroll: true
          });
+         $home.blur();
          e.preventDefault();
       });
 

@@ -284,13 +284,10 @@ a:focus {
 
 .searchbox-container .fa-search:hover,
 .navbar-default .navbar-brand:hover,
-.navbar-default .navbar-nav>li>a:hover {
-   color: #989898 !important;
-}
-
+.navbar-default .navbar-nav>li>a:hover,
 .navbar-default .navbar-brand:focus,
 .navbar-default .navbar-nav>li>a:focus {
-   color: white !important;
+   color: #989898 !important;
 }
 
 .navbar-default div.navbar-collapse form {
@@ -306,6 +303,9 @@ a:focus {
    font-size: 2em;
    font-weight: bold;
    margin-left: 0px !important;
+}
+.navbar-brand:hover {
+   background-image: url(../img/td-hover.svg)
 }
 
 .header-link {
