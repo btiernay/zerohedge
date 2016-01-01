@@ -126,7 +126,6 @@ div.col-md-9 img {
    color: #FFF;
 }
 
-
 /* Top link */
 
 .cd-top .fa {
@@ -192,7 +191,6 @@ div.col-md-9 img {
    }
 }
 
-
 /* Star rating */
 
 .rating {
@@ -241,7 +239,6 @@ div.col-md-9 img {
    color: #000;
 }
 
-
 /* Customization */
 
 blockquote p {
@@ -254,6 +251,8 @@ a:hover,
 a:focus {
    color: #166aa2;
 }
+
+/* Pager */
 
 .pager li>a,
 .pager li>span {
@@ -272,6 +271,8 @@ a:focus {
    background-color: #727272;
 }
 
+/* Navbar */
+
 .navbar {
    border: none;
    box-shadow: 0px 10px 20px -14px #000 !important;
@@ -281,16 +282,12 @@ a:focus {
    background-color: #000; /* #2c2c2c */
 }
 
-.searchbox-container .fa-search:hover {
-   filter: contrast(33%);
-   -webkit-filter: contrast(33%);
-}
-
+.searchbox-container .fa-search:hover,
 .navbar-default .navbar-brand:hover,
-.navbar-default .navbar-brand:focus,
 .navbar-default .navbar-nav>li>a:hover,
+.navbar-default .navbar-brand:focus,
 .navbar-default .navbar-nav>li>a:focus {
-   color: white !important;
+   color: #989898 !important;
 }
 
 .navbar-default div.navbar-collapse form {
@@ -304,9 +301,11 @@ a:focus {
    background-position-y: 0;
    padding-left: 78px;
    font-size: 2em;
+   font-weight: bold;
    margin-left: 0px !important;
-   -webkit-text-stroke-width: 1px;
-   -webkit-text-stroke-color: white;
+}
+.navbar-brand:hover {
+   background-image: url(../img/td-hover.svg)
 }
 
 .header-link {
@@ -345,7 +344,6 @@ h6:hover .header-link {
       width: 263px;
    }
 }
-
 
 /* Footer */
 
@@ -695,11 +693,12 @@ tr.merge-up th {
 .item-list .pager {
    clear: both;
    text-align: center;
+   margin-bottom: 0;
 }
 
 .item-list .pager li {
    background-image: none;
-   display: inline;
+   display: inline-block;
    list-style-type: none;
    padding: 0.2em;
 }
@@ -2269,8 +2268,8 @@ table {
 }
 
 .item-list {
-   margin-top: 3em;
-   margin-bottom: 3em;
+   margin-top: 1em;
+   margin-bottom: 1em;
 }
 
 .item-list .title {
