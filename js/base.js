@@ -1,114 +1,32 @@
 $(function () {
+   'use strict';
+
    // Constants
-   var local = document.URL.replace(/#.*$/, "");
-   var base = 'http://www.zerohedge.com';
-   var url = base + window.location.hash.replace("#", "");
-   var state = {
-      url: url
-   };
+   var local = document.URL.replace(/#.*$/, ""),
+      base = 'http://www.zerohedge.com',
+      url = base + window.location.hash.replace("#", ""),
+      state = {
+         url: url
+      };
 
    // Elements
-   var $window = $(window);
-   var $content = $("#content");
-   var $topLink = $('.cd-top');
+   var $window = $(window),
+      $content = $("#content"),
+      $topLink = $('.cd-top');
 
-   // Initialize
-   init();
+   function load(url, options) {
+      options = $.extend({
+         scroll: false,
+         append: false,
+         selector: null,
+         fade: true
+      }, options);
 
-   function init() {
-      bind();
-      load(url, false);
-   }
-
-   function bind() {
-      var submitIcon = $('.searchbox-icon');
-      var inputBox = $('.searchbox-input');
-      var $search = $('.searchbox');
-      var $home = $('.navbar-brand');
-      var isOpen = false;
-
-      $home.click(function(e){
-         history.pushState({}, 'Zero Hedge', local);
-         load(base, true);
-         e.preventDefault();
-      });
-
-      $search.submit(function (e) {
-         e.preventDefault();
-         submitIcon.click();
-      })
-
-      submitIcon.click(function () {
-         if (isOpen == false) {
-            inputBox.val("");
-            $search.addClass('searchbox-open');
-            inputBox.focus();
-            isOpen = true;
-         } else {
-            $search.removeClass('searchbox-open');
-            inputBox.focusout();
-            isOpen = false;
-         }
-      });
-      submitIcon.mouseup(function () {
-         return false;
-      });
-      $search.mouseup(function () {
-         return false;
-      });
-      $(document).mouseup(function () {
-         if (isOpen == true) {
-            $('.searchbox-icon').css('display', 'block');
-            submitIcon.click();
-         }
-      });
-
-      inputBox.keyup(debounce(function () {
-         var q = inputBox.val().trim();
-
-         if (q == "") {
-            back();
-         } else {
-            search(q);
-         }
-      }, 300));
-
-      $window.on("popstate", back);
-
-      // Top link
-      $window.scroll(function () {
-         ($window.scrollTop() > 300) ? $topLink.addClass('cd-is-visible'): $topLink.removeClass('cd-is-visible cd-fade-out');
-         if ($window.scrollTop() > 1200) {
-            $topLink.addClass('cd-fade-out');
-         }
-      });
-      $(window).scroll(function() {
-          if($(window).scrollTop() > ($(document).height() - $(window).height()) - 1000) {
-             var $pager = $(".pager");
-             var href = $pager.find(".pager-current").last().next().find("a").attr("href");
-             if (!href) {
-                return;
-             }
-
-             var url = base + href;
-             if (state.url == url) {
-                return;
-             }
-
-             console.log("Loading ", url);
-             var selector = $("#comments").length ? "#comments" : null;
-             load(url, false, true, selector);
-          }
-      });
-
-      $topLink.on('click', function (event) {
-         event.preventDefault();
-         $('body').animate({scrollTop: 0}, 700);
-      });
-   }
-
-   function load(url, scroll, append, selector) {
       state.url = url;
+      if (options.fade) {
+         $content.fadeTo(0, 0.5);
+      }
+
       get(url, function (data) {
          var $page = $(data).find("#inner-content");
 
@@ -122,16 +40,21 @@ $(function () {
          comments($page);
 
          // Display
-         show($page, scroll, append, selector);
+         if (options.fade) {
+            $content.fadeTo(10, 1.0);
+         }
+         show($page, options);
       });
    }
 
    function search(q) {
+      $content.fadeTo(0, 0.5);
       get(base + '/search/apachesolr_search/' + encodeURIComponent(q), function (data) {
          var $page = $(data).find(".search-results");
          links($page);
 
          // Display
+         $content.fadeTo(100, 1.0);
          show($page, true);
       });
    }
@@ -181,7 +104,9 @@ $(function () {
          href = href.replace("/articles", "/");
 
          // Load
-         load(href, true);
+         load(href, {
+            scroll: true
+         });
 
          return false;
       });
@@ -213,10 +138,10 @@ $(function () {
    }
 
    function rating($page) {
-      var $rating = $page.find(".fivestar-static-form-item");
-      var text = $rating.find(".average-rating").text().match(/[0-9 , \.]+/) || "0";
-      var rating = Math.round(+text * 2) / 2;
-      var votes = $rating.find(".total-votes").text().match(/\d+/) || 0;
+      var $rating = $page.find(".fivestar-static-form-item"),
+         text = $rating.find(".average-rating").text().match(/[0-9 , \.]+/) || "0",
+         rating = Math.round(+text * 2) / 2,
+         votes = $rating.find(".total-votes").text().match(/\d+/) || 0;
 
       $rating.html(
          '<fieldset class="rating">' +
@@ -233,16 +158,16 @@ $(function () {
          '<input type="radio" disabled="disabled" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>' +
          '</fieldset>');
 
-      var ratingId = "#star" + parseInt(rating) + (rating % 1 == 0.5 ? "half" : "");
+      var ratingId = "#star" + parseInt(rating) + (rating % 1 === 0.5 ? "half" : "");
       $rating.find(ratingId).attr("checked", true);
    }
 
    function comments($page) {
       var $comments = $page.find("#comments");
       $page.find(".non_toggle_area").each(function () {
-         var $comment = $(this);
+         var $comment = $(this),
+            $info = $comment.find(".scomments_info");
 
-         var $info = $comment.find(".scomments_info");
          $info.find("a").remove();
          $info.text($info.text().replace("\|", ""));
 
@@ -250,21 +175,21 @@ $(function () {
          $comment.find(".comment-content p").each(function () {
             var $text = $(this);
             $text.html($text.html().replace(/&nbsp;/g, ''));
-            if ($text.text().trim() == "") {
+            if ($text.text().trim() === "") {
                $text.remove();
             }
          });
       });
    }
 
-   function show($page, scroll, append, selector) {
-      if (append) {
-         $content.append(selector ? $page.find(selector) : $page);
+   function show($page, options) {
+      if (options.append) {
+         $content.append(options.selector ? $page.find(options.selector) : $page);
       } else {
          $content.html($page);
       }
 
-      if (scroll) {
+      if (options.scroll) {
          document.body.scrollIntoView();
       }
    }
@@ -275,38 +200,145 @@ $(function () {
 
    function back() {
       var url = base + location.href.replace(local, "");
-      load(url, false);
+      load(url);
    }
 
    function parseDate(s) {
-      var re = /.*(\d\d)\/(\d\d)\/(\d{4}) (?:- )?(\d\d):(\d\d).*/;
-      var m = re.exec(s);
+      var re = /.*(\d\d)\/(\d\d)\/(\d{4}) (?:- )?(\d\d):(\d\d).*/,
+         m = re.exec(s);
       return m ? new Date(m[3], m[1] - 1, m[2], m[4], m[5]) : null;
    }
 
-   /**
-    * Utilities
-    */
-
    function isToday(td) {
       var d = new Date();
-      return td.getDate() == d.getDate() && td.getMonth() == d.getMonth() && td.getFullYear() == d.getFullYear();
+      return td.getDate() === d.getDate() && td.getMonth() === d.getMonth() && td.getFullYear() === d.getFullYear();
    }
 
    function debounce(func, wait, immediate) {
       var timeout;
       return function () {
          var context = this,
-            args = arguments;
-         var later = function () {
-            timeout = null;
-            if (!immediate) func.apply(context, args);
-         };
-         var callNow = immediate && !timeout;
+            args = arguments,
+            later = function () {
+               timeout = null;
+               if (!immediate) {
+                  func.apply(context, args);
+               }
+            },
+            callNow = immediate && !timeout;
          clearTimeout(timeout);
          timeout = setTimeout(later, wait);
-         if (callNow) func.apply(context, args);
+         if (callNow) {
+            func.apply(context, args);
+         }
       };
-   };
+   }
 
+   function bind() {
+      var submitIcon = $('.searchbox-icon'),
+         inputBox = $('.searchbox-input'),
+         $search = $('.searchbox'),
+         $home = $('.navbar-brand'),
+         isOpen = false;
+
+      $home.click(function (e) {
+         history.pushState({}, 'Zero Hedge', local);
+         load(base, {
+            scroll: true
+         });
+         e.preventDefault();
+      });
+
+      $search.submit(function (e) {
+         e.preventDefault();
+         submitIcon.click();
+      });
+
+      submitIcon.click(function () {
+         if (isOpen === false) {
+            inputBox.val("");
+            $search.addClass('searchbox-open');
+            inputBox.focus();
+            isOpen = true;
+         } else {
+            $search.removeClass('searchbox-open');
+            inputBox.focusout();
+            isOpen = false;
+         }
+      });
+      submitIcon.mouseup(function () {
+         return false;
+      });
+      $search.mouseup(function () {
+         return false;
+      });
+      $(document).mouseup(function () {
+         if (isOpen === true) {
+            $('.searchbox-icon').css('display', 'block');
+            submitIcon.click();
+         }
+      });
+
+      inputBox.keyup(debounce(function () {
+         var q = inputBox.val().trim();
+
+         if (q === "") {
+            back();
+         } else {
+            search(q);
+         }
+      }, 300));
+
+      $window.on("popstate", back);
+
+      // Top link
+      $window.scroll(function () {
+         if ($window.scrollTop() > 300) {
+            $topLink.addClass('cd-is-visible');
+         } else {
+            $topLink.removeClass('cd-is-visible cd-fade-out');
+         }
+
+         if ($window.scrollTop() > 1200) {
+            $topLink.addClass('cd-fade-out');
+         }
+      });
+      $(window).scroll(function () {
+         if ($(window).scrollTop() > ($(document).height() - $(window).height()) - 1000) {
+            var $pager = $(".pager"),
+               href = $pager.find(".pager-current").last().next().find("a").attr("href");
+            if (!href) {
+               return;
+            }
+
+            var url = base + href;
+            if (state.url === url) {
+               return;
+            }
+
+            console.log("Loading ", url);
+            var selector = $("#comments").length ? "#comments" : null;
+            load(url, {
+               append: true,
+               selector: selector,
+               fade: false
+            });
+         }
+      });
+
+      $topLink.on('click', function (event) {
+         event.preventDefault();
+         $('body').animate({
+            scrollTop: 0
+         }, 700);
+      });
+   }
+
+   function init() {
+      bind();
+      load(url);
+   }
+
+   // Initialize
+   init();
 });
