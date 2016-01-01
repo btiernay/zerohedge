@@ -3013,6 +3013,10 @@ h2.img,
    float: left;
    margin-right: 1.5em;
 }
+.non_toggle_area .picture {
+   margin: 0.5em 0.5em;
+   vertical-align: middle;
+}
 
 #sidebar-right {
    padding-top: 3px;
@@ -3078,10 +3082,12 @@ h2.img,
 
 div.toggle_area,
 div.non_toggle_area {
-   border-left: 5px solid #E2E2E2;
-   clear: both;
-   margin: 5px 0;
-   padding: 0;
+   border-left: 2px solid #E9E9E9;
+    clear: both;
+    margin: 10px 0;
+    padding: 0;
+    padding-left: 3px;
+    border-radius: 8px;
 }
 
 div.toggle_label,
@@ -3093,7 +3099,6 @@ div.toggle_label .own {
 }
 
 div.non_toggle_label {
-   background: #fcfcfc;
    padding-left: 10px;
 }
 
@@ -3121,6 +3126,7 @@ div.author {
    padding-bottom: none;
    margin: none;
    margin-right: 10px;
+   clear: both;
 }
 
 div.author .picture {
@@ -3171,9 +3177,14 @@ div.scomments_container {
 }
 
 span.scomments_info {
-   float: right;
-   clear: right;
-   padding-left: 1em;
+   color: #d1d1d1;
+   display: block;
+   font-size: 0.8em;
+   margin-top: -0.8em;
+   color: #d1d1d1;
+}
+span.scomments_info::before {
+   content: " @ ";
 }
 
 .picture {
