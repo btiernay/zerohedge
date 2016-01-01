@@ -172,7 +172,8 @@ $(function () {
 
          $picture.prependTo($comment);
          $info.find("a").remove();
-         $info.text($info.text().replace("\|", ""));
+         var time = $info.text().replace("\|", "");
+         $info.text(moment(time, "ddd, MM/DD/YYYY - HH:mm").fromNow());
          $info.appendTo($header);
 
          // Remove blank lines
