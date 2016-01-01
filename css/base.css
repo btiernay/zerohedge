@@ -3013,6 +3013,10 @@ h2.img,
    float: left;
    margin-right: 1.5em;
 }
+.non_toggle_area .picture {
+   margin: 0em 0.5em;
+   vertical-align: middle;
+}
 
 #sidebar-right {
    padding-top: 3px;
@@ -3093,7 +3097,6 @@ div.toggle_label .own {
 }
 
 div.non_toggle_label {
-   background: #fcfcfc;
    padding-left: 10px;
 }
 
@@ -3121,6 +3124,7 @@ div.author {
    padding-bottom: none;
    margin: none;
    margin-right: 10px;
+   clear: both;
 }
 
 div.author .picture {
@@ -3171,9 +3175,10 @@ div.scomments_container {
 }
 
 span.scomments_info {
-   float: right;
    clear: right;
-   padding-left: 1em;
+}
+span.scomments_info::before {
+   content: " @ ";
 }
 
 .picture {

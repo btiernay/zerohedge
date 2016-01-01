@@ -3,16 +3,16 @@ $(function () {
 
    // Constants
    var local = document.URL.replace(/#.*$/, ""),
-      base = 'http://www.zerohedge.com',
-      url = base + window.location.hash.replace("#", ""),
-      state = {
-         url: url
-      };
+       base = 'http://www.zerohedge.com',
+       url = base + window.location.hash.replace("#", ""),
+       state = {
+          url: url
+       };
 
    // Elements
    var $window = $(window),
-      $content = $("#content"),
-      $topLink = $('.cd-top');
+       $content = $("#content"),
+       $topLink = $('.cd-top');
 
    function load(url, options) {
       options = $.extend({
@@ -72,7 +72,7 @@ $(function () {
 
          if (isToday(date)) {
             var hr = date.getHours(),
-               min = date.getMinutes();
+                min = date.getMinutes();
 
             if (min < 10) {
                min = "0" + min;
@@ -139,9 +139,9 @@ $(function () {
 
    function rating($page) {
       var $rating = $page.find(".fivestar-static-form-item"),
-         text = $rating.find(".average-rating").text().match(/[0-9 , \.]+/) || "0",
-         rating = Math.round(+text * 2) / 2,
-         votes = $rating.find(".total-votes").text().match(/\d+/) || 0;
+          text = $rating.find(".average-rating").text().match(/[0-9 , \.]+/) || "0",
+          rating = Math.round(+text * 2) / 2,
+          votes = $rating.find(".total-votes").text().match(/\d+/) || 0;
 
       $rating.html(
          '<fieldset class="rating">' +
@@ -166,15 +166,19 @@ $(function () {
       var $comments = $page.find("#comments");
       $page.find(".non_toggle_area").each(function () {
          var $comment = $(this),
-            $info = $comment.find(".scomments_info");
+             $header = $comment.find(".non_toggle_label"),
+             $info = $comment.find(".scomments_info"),
+             $picture = $comment.find(".picture");
 
+         $picture.prependTo($comment);
          $info.find("a").remove();
          $info.text($info.text().replace("\|", ""));
+         $info.appendTo($header);
 
          // Remove blank lines
          $comment.find(".comment-content p").each(function () {
             var $text = $(this);
-            $text.html($text.html().replace(/&nbsp;/g, ''));
+
             if ($text.text().trim() === "") {
                $text.remove();
             }
@@ -205,7 +209,7 @@ $(function () {
 
    function parseDate(s) {
       var re = /.*(\d\d)\/(\d\d)\/(\d{4}) (?:- )?(\d\d):(\d\d).*/,
-         m = re.exec(s);
+          m = re.exec(s);
       return m ? new Date(m[3], m[1] - 1, m[2], m[4], m[5]) : null;
    }
 
@@ -218,14 +222,14 @@ $(function () {
       var timeout;
       return function () {
          var context = this,
-            args = arguments,
-            later = function () {
-               timeout = null;
-               if (!immediate) {
-                  func.apply(context, args);
-               }
-            },
-            callNow = immediate && !timeout;
+             args = arguments,
+             later = function () {
+                timeout = null;
+                if (!immediate) {
+                   func.apply(context, args);
+                }
+             },
+             callNow = immediate && !timeout;
          clearTimeout(timeout);
          timeout = setTimeout(later, wait);
          if (callNow) {
@@ -236,10 +240,10 @@ $(function () {
 
    function bind() {
       var submitIcon = $('.searchbox-icon'),
-         inputBox = $('.searchbox-input'),
-         $search = $('.searchbox'),
-         $home = $('.navbar-brand'),
-         isOpen = false;
+          inputBox = $('.searchbox-input'),
+          $search = $('.searchbox'),
+          $home = $('.navbar-brand'),
+          isOpen = false;
 
       $home.click(function (e) {
          history.pushState({}, 'Zero Hedge', local);
@@ -304,10 +308,12 @@ $(function () {
             $topLink.addClass('cd-fade-out');
          }
       });
+
+      // Paging
       $(window).scroll(function () {
          if ($(window).scrollTop() > ($(document).height() - $(window).height()) - 1000) {
             var $pager = $(".pager"),
-               href = $pager.find(".pager-current").last().next().find("a").attr("href");
+                href = $pager.find(".pager-current").last().next().find("a").attr("href");
             if (!href) {
                return;
             }
