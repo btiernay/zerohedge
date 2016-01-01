@@ -14,12 +14,35 @@ $(function () {
        $content = $("#content"),
        $topLink = $('.cd-top');
 
+   /**
+    * Show a {@param $page} in the window.
+    */
+   function show($page, options) {
+      if (options.append) {
+         $content.append(options.selector ? $page.find(options.selector) : $page);
+      } else {
+         $content.html($page);
+      }
+
+      if (options.scroll) {
+         document.body.scrollIntoView();
+      }
+
+      if (options.callback) {
+         options.callback($page);
+      }
+   }
+
+   /**
+    * Load a {@param url} into the page.
+    */
    function load(url, options) {
       options = $.extend({
          scroll: false,
          append: false,
          selector: null,
-         fade: true
+         fade: true,
+         callback: null
       }, options);
 
       state.url = url;
@@ -34,14 +57,14 @@ $(function () {
          clean($page);
          submitted($page);
          links($page);
-         images($page);
+         media($page);
          article($page);
          rating($page);
          comments($page);
 
          // Display
          if (options.fade) {
-            $content.fadeTo(10, 1.0);
+            $content.fadeTo(0, 1.0);
          }
          show($page, options);
       });
@@ -54,7 +77,7 @@ $(function () {
          links($page);
 
          // Display
-         $content.fadeTo(100, 1.0);
+         $content.fadeTo(0, 1.0);
          show($page, true);
       });
    }
@@ -89,7 +112,7 @@ $(function () {
       // Update links
       $page.find("a").click(function (data) {
          var href = $(this).attr('href');
-         var relative = href.indexOf("http://") < 0;
+         var relative = href.indexOf("http://") < 0 && href.indexOf("https://") < 0;
          var site = href.indexOf(base) >= 0;
 
          if (!relative && !site) {
@@ -112,18 +135,20 @@ $(function () {
       });
    }
 
-   function images($page) {
+   function media($page) {
       $page.find("img,video,object").each(function () {
          // Fade-in on load
-         var $img = $(this);
-         $img.hide().bind("load", function () {
-            $img.fadeIn();
+         var $media = $(this);
+         $media.hide().bind("load", function () {
+            $media.fadeIn();
          });
 
          // Update absolute location
-         var src = $img.attr("src");
-         src = src.indexOf("http://") >= 0 ? src : base + src;
-         this.src = src;
+         if ($media.is("img")){
+            var src = $media.attr("src");
+            src = src.indexOf("http://") >= 0 ? src : base + src;
+            this.src = src;
+         }
       });
    }
 
@@ -187,24 +212,12 @@ $(function () {
       });
    }
 
-   function show($page, options) {
-      if (options.append) {
-         $content.append(options.selector ? $page.find(options.selector) : $page);
-      } else {
-         $content.html($page);
-      }
-
-      if (options.scroll) {
-         document.body.scrollIntoView();
-      }
-   }
-
    function get(url, callback) {
       $.get("https://crossorigin.me/" + url, callback);
    }
 
    function back() {
-      var url = base + location.href.replace(local, "");
+      var url = base + location.href.replace(local, "").replace("#","");
       load(url);
    }
 
@@ -221,6 +234,7 @@ $(function () {
 
    function debounce(func, wait, immediate) {
       var timeout;
+
       return function () {
          var context = this,
              args = arguments,
@@ -231,6 +245,7 @@ $(function () {
                 }
              },
              callNow = immediate && !timeout;
+
          clearTimeout(timeout);
          timeout = setTimeout(later, wait);
          if (callNow) {
@@ -246,12 +261,18 @@ $(function () {
           $home = $('.navbar-brand'),
           isOpen = false;
 
+      // Home link
       $home.click(function (e) {
          history.pushState({}, 'Zero Hedge', local);
+
          load(base, {
-            scroll: true
+            scroll: true,
+            callback: function() {
+               $home.blur();
+               $content.focus();
+            }
          });
-         $home.blur();
+
          e.preventDefault();
       });
 
@@ -312,7 +333,8 @@ $(function () {
 
       // Paging
       $(window).scroll(function () {
-         if ($(window).scrollTop() > ($(document).height() - $(window).height()) - 1000) {
+         var offset = 1000;
+         if ($(window).scrollTop() > ($(document).height() - $(window).height()) - offset) {
             var $pager = $(".pager"),
                 href = $pager.find(".pager-current").last().next().find("a").attr("href");
             if (!href) {
@@ -325,10 +347,9 @@ $(function () {
             }
 
             console.log("Loading ", url);
-            var selector = $("#comments").length ? "#comments" : null;
             load(url, {
                append: true,
-               selector: selector,
+               selector: $("#comments").length ? "#comments" : null,
                fade: false
             });
          }
