@@ -15,6 +15,25 @@ $(function () {
        $topLink = $('.cd-top');
 
    /**
+    * Show a {@param $page} in the window.
+    */
+   function show($page, options) {
+      if (options.append) {
+         $content.append(options.selector ? $page.find(options.selector) : $page);
+      } else {
+         $content.html($page);
+      }
+
+      if (options.scroll) {
+         document.body.scrollIntoView();
+      }
+
+      if (options.callback) {
+         options.callback($page);
+      }
+   }
+
+   /**
     * Load a {@param url} into the page.
     */
    function load(url, options) {
@@ -22,7 +41,8 @@ $(function () {
          scroll: false,
          append: false,
          selector: null,
-         fade: true
+         fade: true,
+         callback: null
       }, options);
 
       state.url = url;
@@ -190,18 +210,6 @@ $(function () {
       });
    }
 
-   function show($page, options) {
-      if (options.append) {
-         $content.append(options.selector ? $page.find(options.selector) : $page);
-      } else {
-         $content.html($page);
-      }
-
-      if (options.scroll) {
-         document.body.scrollIntoView();
-      }
-   }
-
    function get(url, callback) {
       $.get("https://crossorigin.me/" + url, callback);
    }
@@ -224,6 +232,7 @@ $(function () {
 
    function debounce(func, wait, immediate) {
       var timeout;
+
       return function () {
          var context = this,
              args = arguments,
@@ -234,6 +243,7 @@ $(function () {
                 }
              },
              callNow = immediate && !timeout;
+
          clearTimeout(timeout);
          timeout = setTimeout(later, wait);
          if (callNow) {
@@ -249,12 +259,16 @@ $(function () {
           $home = $('.navbar-brand'),
           isOpen = false;
 
+      // Home link
       $home.click(function (e) {
-         $home.blur();
-         $content.focus();
          history.pushState({}, 'Zero Hedge', local);
+
          load(base, {
-            scroll: true
+            scroll: true,
+            callback: function() {
+               $home.blur();
+               $content.focus();
+            }
          });
 
          e.preventDefault();
@@ -317,7 +331,8 @@ $(function () {
 
       // Paging
       $(window).scroll(function () {
-         if ($(window).scrollTop() > ($(document).height() - $(window).height()) - 1000) {
+         var offset = 1000;
+         if ($(window).scrollTop() > ($(document).height() - $(window).height()) - offset) {
             var $pager = $(".pager"),
                 href = $pager.find(".pager-current").last().next().find("a").attr("href");
             if (!href) {
@@ -330,10 +345,9 @@ $(function () {
             }
 
             console.log("Loading ", url);
-            var selector = $("#comments").length ? "#comments" : null;
             load(url, {
                append: true,
-               selector: selector,
+               selector: $("#comments").length ? "#comments" : null,
                fade: false
             });
          }
