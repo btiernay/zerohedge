@@ -112,7 +112,7 @@ $(function () {
       // Update links
       $page.find("a").click(function (data) {
          var href = $(this).attr('href');
-         var relative = href.indexOf("http://") < 0;
+         var relative = href.indexOf("http://") < 0 && href.indexOf("https://") < 0;
          var site = href.indexOf(base) >= 0;
 
          if (!relative && !site) {
