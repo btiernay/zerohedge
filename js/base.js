@@ -14,6 +14,9 @@ $(function () {
        $content = $("#content"),
        $topLink = $('.cd-top');
 
+   /**
+    * Load a {@param url} into the page.
+    */
    function load(url, options) {
       options = $.extend({
          scroll: false,
@@ -41,7 +44,7 @@ $(function () {
 
          // Display
          if (options.fade) {
-            $content.fadeTo(10, 1.0);
+            $content.fadeTo(0, 1.0);
          }
          show($page, options);
       });
@@ -54,7 +57,7 @@ $(function () {
          links($page);
 
          // Display
-         $content.fadeTo(100, 1.0);
+         $content.fadeTo(0, 1.0);
          show($page, true);
       });
    }
@@ -247,11 +250,12 @@ $(function () {
           isOpen = false;
 
       $home.click(function (e) {
+         $home.blur();
          history.pushState({}, 'Zero Hedge', local);
          load(base, {
             scroll: true
          });
-         $home.blur();
+
          e.preventDefault();
       });
 
