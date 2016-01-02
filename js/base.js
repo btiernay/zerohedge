@@ -250,7 +250,7 @@ $(function () {
           isOpen = false;
 
       $home.click(function (e) {
-         $content.blur();
+         $content.focus();
          history.pushState({}, 'Zero Hedge', local);
          load(base, {
             scroll: true
