@@ -57,7 +57,7 @@ $(function () {
          clean($page);
          submitted($page);
          links($page);
-         images($page);
+         media($page);
          article($page);
          rating($page);
          comments($page);
@@ -135,18 +135,20 @@ $(function () {
       });
    }
 
-   function images($page) {
+   function media($page) {
       $page.find("img,video,object").each(function () {
          // Fade-in on load
-         var $img = $(this);
-         $img.hide().bind("load", function () {
-            $img.fadeIn();
+         var $media = $(this);
+         $media.hide().bind("load", function () {
+            $media.fadeIn();
          });
 
          // Update absolute location
-         var src = $img.attr("src");
-         src = src.indexOf("http://") >= 0 ? src : base + src;
-         this.src = src;
+         if ($media.is("img")){
+            var src = $media.attr("src");
+            src = src.indexOf("http://") >= 0 ? src : base + src;
+            this.src = src;
+         }
       });
    }
 
