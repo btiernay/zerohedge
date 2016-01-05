@@ -163,8 +163,10 @@ $(function () {
 
       $page.find("p").each(function(){
          var $p = $(this);
+
+         // Seems to be a convention for separating logical content
          if ($p.text().trim() == "* * *") {
-            p.html("<hr>");
+            $p.html("<div class='section-divider'>");
          }
       })
    }

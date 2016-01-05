@@ -126,6 +126,14 @@ div.col-md-9 img {
    color: #FFF;
 }
 
+/* Content */
+
+.section-divider {
+    width: 30%;
+    border-bottom: 1px solid #e2e2e2;
+    margin: 2em;
+}
+
 /* Top link */
 
 .cd-top .fa {
