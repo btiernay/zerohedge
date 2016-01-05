@@ -261,6 +261,10 @@ $(function () {
           $home = $('.navbar-brand'),
           isOpen = false;
 
+      $(".navbar-fixed-top").autoHidingNavbar({
+        // see next for specifications
+      });
+
       // Home link
       $home.click(function (e) {
          history.pushState({}, 'Zero Hedge', local);
