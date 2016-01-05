@@ -92,6 +92,7 @@ $(function () {
          var $date = $(this);
          var text = $(this).text().replace("Submitted by Tyler Durden on ", "");
          var date = parseDate(text);
+         var d = moment(text, "MM/DD/YYYY - HH:mm");
 
          if (isToday(date)) {
             var hr = date.getHours(),
@@ -102,6 +103,8 @@ $(function () {
             }
             var ampm = hr < 12 ? "am" : "pm";
             text = (hr <= 12 ? hr : hr - 12) + ":" + min + " " + ampm;
+         } else {
+            text = d.format("dddd, MMMM Do YYYY, h:mm a");
          }
 
          $date.text(text);
@@ -161,7 +164,8 @@ $(function () {
          color: "white"
       });
 
-      $page.find("p").each(function(){
+      var $article = $page.find(".node");
+      $article.find("p").each(function(){
          var $p = $(this);
 
          // Seems to be a convention for separating logical content
@@ -270,9 +274,8 @@ $(function () {
           $home = $('.navbar-brand'),
           isOpen = false;
 
-      $(".navbar-fixed-top").autoHidingNavbar({
-        // see next for specifications
-      });
+      // Hide nav on scroll down
+      $(".navbar-fixed-top").autoHidingNavbar();
 
       // Home link
       $home.click(function (e) {
