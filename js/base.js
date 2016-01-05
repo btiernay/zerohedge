@@ -160,6 +160,13 @@ $(function () {
          height: "auto",
          color: "white"
       });
+
+      $page.find("p").each(function(){
+         var $p = $(this);
+         if ($p.text().trim() == "* * *") {
+            p.html("<hr>");
+         }
+      })
    }
 
    function rating($page) {
