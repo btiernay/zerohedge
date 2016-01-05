@@ -160,6 +160,15 @@ $(function () {
          height: "auto",
          color: "white"
       });
+
+      $page.find("p").each(function(){
+         var $p = $(this);
+
+         // Seems to be a convention for separating logical content
+         if ($p.text().trim() == "* * *") {
+            $p.html("<div class='section-divider'>");
+         }
+      })
    }
 
    function rating($page) {
@@ -260,6 +269,10 @@ $(function () {
           $search = $('.searchbox'),
           $home = $('.navbar-brand'),
           isOpen = false;
+
+      $(".navbar-fixed-top").autoHidingNavbar({
+        // see next for specifications
+      });
 
       // Home link
       $home.click(function (e) {
