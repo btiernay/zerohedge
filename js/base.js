@@ -92,7 +92,7 @@ $(function () {
          var $date = $(this);
          var text = $(this).text().replace("Submitted by Tyler Durden on ", "");
          var date = parseDate(text);
-         var d = moment(text, "MM/DD/YYYY - HH:mm");
+         var d = moment(date);
 
          if (isToday(date)) {
             var hr = date.getHours(),
@@ -149,7 +149,7 @@ $(function () {
          // Update absolute location
          if ($media.is("img")){
             var src = $media.attr("src");
-            src = src.indexOf("http://") >= 0 ? src : base + src;
+            src = src.indexOf("http://") >= 0 || src.indexOf("https://") >= 0 ? src : base + src;
             this.src = src;
          }
       });
@@ -290,7 +290,9 @@ $(function () {
          });
 
          e.preventDefault();
-      });
+      }).focus(function() {
+         $home.blur();
+      })
 
       $search.submit(function (e) {
          e.preventDefault();
